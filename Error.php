@@ -1,4 +1,4 @@
-<?php
+<?php namespace Latch;
 
 /*
   Latch PHP SDK - Set of  reusable classes to  allow developers integrate Latch on
