@@ -21,7 +21,7 @@
 
 * Create a Latch object with the "Application ID" and "Secret" previously obtained.
 ```
-	$api = new Latch(APP_ID, APP_SECRET);
+	$api = new Latch\Latch(APP_ID, APP_SECRET);
 ```
 
 * Optional settings:
