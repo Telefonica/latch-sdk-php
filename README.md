@@ -38,6 +38,6 @@
 
 * After every API call, get Latch response data and errors and handle them.
 ```
-     $pairResponse->getData()
-     $pairResponse->getError()
+     $pairResponse->getData();
+     $pairResponse->getError();
 ```
