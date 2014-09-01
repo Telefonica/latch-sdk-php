@@ -61,7 +61,7 @@ final class Latch {
     }
     
     public static function setHost($host) {
-            Latch::$API_HOST = $host;
+        self::$API_HOST = $host;
     }
     
     public static function setProxy($host) {
@@ -219,7 +219,7 @@ final class Latch {
                     error_log("Error serializing headers. Only specific " . $X_11PATHS_HEADER_PREFIX . " headers need to be singed");
                     return null;
                 }
-                $serializedHeaders .= $key . self::X_11PATHS_HEADER_SEPARATOR . $value . " ";
+                $serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
             }
             return trim($serializedHeaders, "utf-8");
         } else {
@@ -236,3 +236,4 @@ final class Latch {
         return $time->format(self::$UTC_STRING_FORMAT);
     }
 }
+
