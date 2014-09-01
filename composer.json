@@ -17,5 +17,5 @@
             "ElevenPaths\\Latch\\": ""
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
