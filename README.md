@@ -14,7 +14,7 @@
 
 * Require "latch" sdk in your composer.json and run composer update:
 ```
-    "ElevenPaths/latch-sdk-php": "0.*"
+    "elevenpaths/latch-sdk-php": "0.*"
 ```
 
 * Create a Latch object with the "Application ID" and "Secret" previously obtained.
