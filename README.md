@@ -12,11 +12,9 @@
 
 #### USING THE SDK IN PHP ####
 
-* Require "latch" sdk. Keep in mind to set the path properly according to your server.
+* Require "latch" sdk in your composer.json and run composer update:
 ```
-	require_once("latch/Latch.php");
-     require_once("latch/LatchResponse.php");
-     require_once("latch/Error.php");
+    "elevenpaths/latch-sdk-php": "0.*"
 ```
 
 * Create a Latch object with the "Application ID" and "Secret" previously obtained.

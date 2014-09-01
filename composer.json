@@ -1,0 +1,19 @@
+{
+    "name": "elevenpaths/latch-sdk-php",
+    "description": "Latch SDK PHP",
+    "keywords": ["api", "security", "php", "latch"],
+    "license": "LGPL-2.1+",
+    "authors": [
+        {
+            "name" : "ElevenPaths",
+            "email": "elevenpaths@elevenpaths.com"
+        }
+    ],
+    "require": {
+        "php" : ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "minimum-stability": "stable"
+}
