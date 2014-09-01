@@ -1,5 +1,5 @@
 {
-    "name": "faytzel/latch-sdk-php",
+    "name": "elevenpaths/latch-sdk-php",
     "description": "Latch SDK PHP",
     "keywords": ["api", "security", "php", "latch"],
     "license": "LGPL-2.1+",
