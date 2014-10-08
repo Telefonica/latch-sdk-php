@@ -189,7 +189,7 @@ final class Latch {
 	}
 
 	public function lock($accountId, $operationId=null){
-		if ($operationId != null){
+		if ($operationId == null){
 			return $this->HTTP_GET_proxy(self::$API_LOCK_URL . "/" . $accountId);
 		}else{
 			return $this->HTTP_GET_proxy(self::$API_LOCK_URL . "/" . $accountId . "/op/" . $operationId);
@@ -197,7 +197,7 @@ final class Latch {
 	}
 
 	public function unlock($accountId, $operationId=null){
-		if ($operationId != null){
+		if ($operationId == null){
 			return $this->HTTP_GET_proxy(self::$API_UNLOCK_URL . "/" . $accountId);
 		}else{
 			return $this->HTTP_GET_proxy(self::$API_UNLOCK_URL . "/" . $accountId . "/op/" . $operationId);
