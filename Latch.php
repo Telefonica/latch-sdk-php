@@ -206,8 +206,8 @@ final class Latch {
 
 	public function history($accountId, $from=0, $to=null) {
 		if ($to == null){
-			$date = new DateTime();
-			$to = $date->getTimestamp()*1000;
+			$date = time();
+			$to = $date*1000;
 		}
 		return $this->HTTP_GET_proxy(self::$API_HISTORY_URL . "/" . $accountId . "/" . $from . "/" . $to);
 	}
