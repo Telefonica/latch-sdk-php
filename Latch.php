@@ -190,17 +190,17 @@ final class Latch {
 
 	public function lock($accountId, $operationId=null){
 		if ($operationId == null){
-			return $this->HTTP_GET_proxy(self::$API_LOCK_URL . "/" . $accountId);
+			return $this->HTTP_POST_proxy(self::$API_LOCK_URL . "/" . $accountId, array());
 		}else{
-			return $this->HTTP_GET_proxy(self::$API_LOCK_URL . "/" . $accountId . "/op/" . $operationId);
+			return $this->HTTP_POST_proxy(self::$API_LOCK_URL . "/" . $accountId . "/op/" . $operationId, array());
 		}
 	}
 
 	public function unlock($accountId, $operationId=null){
 		if ($operationId == null){
-			return $this->HTTP_GET_proxy(self::$API_UNLOCK_URL . "/" . $accountId);
+			return $this->HTTP_POST_proxy(self::$API_UNLOCK_URL . "/" . $accountId, array());
 		}else{
-			return $this->HTTP_GET_proxy(self::$API_UNLOCK_URL . "/" . $accountId . "/op/" . $operationId);
+			return $this->HTTP_POST_proxy(self::$API_UNLOCK_URL . "/" . $accountId . "/op/" . $operationId, array());
 		}
 	}
 
@@ -231,6 +231,10 @@ final class Latch {
 			'two_factor' => urlencode($twoFactor),
 			'lock_on_request' => urlencode($lockOnRequest));
 		return $this->HTTP_POST_proxy(self::$API_OPERATION_URL . "/" . $operationId, $data);
+	}
+
+	public function getOperations(){
+		return $this->HTTP_GET_proxy(self::$API_OPERATION_URL);
 	}
 
 	/**
