@@ -233,8 +233,12 @@ final class Latch {
 		return $this->HTTP_POST_proxy(self::$API_OPERATION_URL . "/" . $operationId, $data);
 	}
 
-	public function getOperations(){
-		return $this->HTTP_GET_proxy(self::$API_OPERATION_URL);
+	public function getOperations($operationId=null){
+		if ($operationId == null){
+			return $this->HTTP_GET_proxy(self::$API_OPERATION_URL);
+		}else{
+			return $this->HTTP_GET_proxy(self::$API_OPERATION_URL . "/" . $operationId);
+		}
 	}
 
 	/**
