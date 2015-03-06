@@ -53,8 +53,13 @@ class Error {
 	 */
 	public function toJson() {
 		$error = array();
-		$error["code"] = $this->code;
-		$error["message"] = $this->message;
+		if(!empty($this->code)) {
+		    $error["code"] = $this->code;
+		}
+		
+		if(!empty($this->message)) {
+		    $error["message"] = $this->message;
+		}
 		return json_encode($error);
 	}
 }
