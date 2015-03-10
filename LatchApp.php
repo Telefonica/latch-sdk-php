@@ -46,13 +46,26 @@ class LatchApp extends LatchAuth {
 		return $this->HTTP_GET_proxy(self::$API_PAIR_URL . "/" . $token);
 	}
 
-	public function status($accountId) {
-		return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId);
-	}
+    public function status($accountId, $silent = false, $nootp = false) {
+        if ($silent && $nootp) {
+            return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId . "/nootp/silent");
+        }
+        if ($silent) {
+            return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId . "/silent");
+        }
+        if ($nootp) {
+            return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId . "/nootp");
+        }
+        return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId);
+    }
 
-	public function operationStatus($accountId, $operationId) {
-		return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId . "/op/" . $operationId);
-	}
+    public function operationStatus($accountId, $operationId, $silentAndNootp = false) {
+        if ($silentAndNootp) {
+            return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId . "/op/" . $operationId . "/nootp/silent");
+        } else {
+            return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId . "/op/" . $operationId);
+        }
+    }
 
 	public function unpair($accountId) {
 		return $this->HTTP_GET_proxy(self::$API_UNPAIR_URL . "/" . $accountId);
