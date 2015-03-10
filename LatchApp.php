@@ -46,13 +46,27 @@ class LatchApp extends LatchAuth {
 		return $this->HTTP_GET_proxy(self::$API_PAIR_URL . "/" . $token);
 	}
 
-	public function status($accountId) {
-		return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId);
-	}
+    public function status($accountId, $silent = false, $nootp = false) {
+        $url = self::$API_CHECK_STATUS_URL . "/" . $accountId;
+        if ($nootp) {
+            $url .= "/nootp";
+        }
+        if ($silent) {
+            $url .= "/silent";
+        }
+        return $this->HTTP_GET_proxy($url);
+    }
 
-	public function operationStatus($accountId, $operationId) {
-		return $this->HTTP_GET_proxy(self::$API_CHECK_STATUS_URL . "/" . $accountId . "/op/" . $operationId);
-	}
+    public function operationStatus($accountId, $operationId, $silent=false, $nootp = false) {
+        $url = self::$API_CHECK_STATUS_URL . "/" . $accountId . "/op/" . $operationId;
+        if ($nootp) {
+            $url .= "/nootp";
+        }
+        if ($silent) {
+            $url .= "/silent";
+        }
+        return $this->HTTP_GET_proxy($url);
+    }
 
 	public function unpair($accountId) {
 		return $this->HTTP_GET_proxy(self::$API_UNPAIR_URL . "/" . $accountId);
