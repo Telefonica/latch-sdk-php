@@ -1,0 +1,26 @@
+{
+  "name": "elevenpaths/latch-sdk-php",
+  "version": "1.0.1",
+  "description": "Latch SDK PHP",
+  "keywords": ["api", "security", "php", "latch"],
+  "license": "LGPL-2.1+",
+  "authors": [
+    {
+      "name" : "ElevenPaths",
+      "email": "elevenpaths@elevenpaths.com"
+    }
+  ],
+  "repositories": [
+    {
+      "url": "https://github.com/pradomota/latch-sdk-php.git",
+      "type": "git"
+    }
+  ],
+  "require": {
+    "php" : ">=5.3.0"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  },
+  "minimum-stability": "stable"
+}

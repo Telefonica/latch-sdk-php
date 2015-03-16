@@ -20,8 +20,10 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-require_once('LatchResponse.php');
-require_once('Error.php');
+namespace ElevenPaths\Latch;
+
+use ElevenPaths\Latch\LatchResponse as LatchResponse;
+use ElevenPaths\Latch\Error as Error;
 
 /**
  * This class models an allows the user to make signed request the Latch API

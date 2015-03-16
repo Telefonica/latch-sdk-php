@@ -1,7 +1,5 @@
 <?php
 
-require_once('LatchApp.php');
-
 /*
   Latch PHP SDK - Set of  reusable classes to  allow developers integrate Latch on
   their applications.
@@ -21,6 +19,11 @@ require_once('LatchApp.php');
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
+namespace ElevenPaths\Latch;
+
+require_once("LatchApp.php");
+use ElevenPaths\Latch\LatchApp as LatchApp;
 
 /**
  *
