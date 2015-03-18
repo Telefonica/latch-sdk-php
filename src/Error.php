@@ -20,11 +20,13 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+namespace ElevenPaths\Latch;
+
 class Error {
+
 	private $code;
 	private $message;
-	
-	
+
 	/**
 	 * 
 	 * @param string $json a Json representation of an error with "code" and "message" elements

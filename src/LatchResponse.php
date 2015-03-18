@@ -20,7 +20,10 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+namespace ElevenPaths\Latch;
+
 require_once("Error.php");
+use ElevenPaths\Latch\Error as Error;
 
 /**
  * This class models a response from any of the endpoints in the Latch API.
@@ -36,10 +39,11 @@ class LatchResponse {
 	public $data = null;
 	public $error = null;
 
-	/**
-	 *
-	 * @param $json a json string received from one of the methods of the Latch API
-	 */
+    /**
+     *
+     * @param $jsonString
+     * @internal param a $json json string received from one of the methods of the Latch API
+     */
 	public function __construct($jsonString) {
 		$json = json_decode($jsonString);
 		if(!is_null($json)) {

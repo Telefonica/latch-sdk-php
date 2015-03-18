@@ -1,7 +1,10 @@
 <?php
 
-require_once('LatchAuth.php');
-require_once('LatchResponse.php');
+namespace ElevenPaths\Latch;
+
+require_once("LatchAuth.php");
+use ElevenPaths\Latch\LatchAuth as LatchAuth;
+use ElevenPaths\Latch\LatchResponse as LatchResponse;
 
 /**
  * This class model the API for a Latch User. Every action here is related to a User. This

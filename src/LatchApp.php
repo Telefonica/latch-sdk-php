@@ -20,8 +20,11 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-require_once('LatchAuth.php');
-require_once('LatchResponse.php');
+namespace ElevenPaths\Latch;
+
+require_once("LatchAuth.php");
+use ElevenPaths\Latch\LatchAuth as LatchAuth;
+use ElevenPaths\Latch\LatchResponse as LatchResponse;
 
 /**
  * This class model the API for Applications. Every action here is related to an Application. This
