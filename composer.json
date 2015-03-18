@@ -12,12 +12,13 @@
   ],
   "repositories": [
     {
-      "url": "https://github.com/pradomota/latch-sdk-php.git",
-      "type": "git"
+      "type": "vcs",
+      "url": "https://github.com/pradomota/latch-sdk-php"
     }
   ],
   "require": {
-    "php" : ">=5.3.0"
+    "php" : ">=5.3.0",
+    "latch-sdk-php": "master"
   },
   "autoload": {
     "classmap": ["src/"]
