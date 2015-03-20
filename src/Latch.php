@@ -22,7 +22,6 @@
 
 namespace ElevenPaths\Latch;
 
-require_once("LatchApp.php");
 use ElevenPaths\Latch\LatchApp as LatchApp;
 
 /**

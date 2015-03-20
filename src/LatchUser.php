@@ -2,7 +2,6 @@
 
 namespace ElevenPaths\Latch;
 
-require_once("LatchAuth.php");
 use ElevenPaths\Latch\LatchAuth as LatchAuth;
 use ElevenPaths\Latch\LatchResponse as LatchResponse;
 
