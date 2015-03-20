@@ -24,6 +24,8 @@ namespace ElevenPaths\Latch;
 
 use ElevenPaths\Latch\LatchResponse as LatchResponse;
 use ElevenPaths\Latch\Error as Error;
+use DateTime;
+use DateTimeZone;
 
 /**
  * This class models an allows the user to make signed request the Latch API

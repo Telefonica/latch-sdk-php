@@ -22,7 +22,6 @@
 
 namespace ElevenPaths\Latch;
 
-require_once("Error.php");
 use ElevenPaths\Latch\Error as Error;
 
 /**
