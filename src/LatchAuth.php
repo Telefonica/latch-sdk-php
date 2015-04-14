@@ -137,7 +137,6 @@ abstract class LatchAuth {
 
     public function HTTP($method, $url, $headers, $params) {
         $curlHeaders = array();
-        print_r($url);
         foreach ($headers as $hkey=>$hvalue) {
             array_push($curlHeaders, $hkey . ":" . $hvalue);
         }
