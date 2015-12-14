@@ -84,13 +84,14 @@ abstract class LatchAuth {
      * @return string the specified part from the header or an empty string if not existent
      */
     private static function getPartFromHeader($part, $header) {
-        if (!empty($header)) {
-            $parts = explode(self::$AUTHORIZATION_HEADER_FIELD_SEPARATOR, $header);
-            if(count($parts) > $part) {
-                return $parts[$part];
-            }
-        }
-        return "";
+	    $result_to_return = "";
+	    if (!empty($header)) {
+		    $parts = explode(self::$AUTHORIZATION_HEADER_FIELD_SEPARATOR, $header);
+		    if(count($parts) > $part) {
+			    $result_to_return = $parts[$part];
+		    }
+	    }
+	    return $result_to_return;
     }
 
     /**
@@ -149,7 +150,7 @@ abstract class LatchAuth {
         curl_setopt($ch, CURLOPT_PROXY, self::$PROXY_HOST);
 
         if ($method == "PUT" || $method == "POST"){
-            $params_string="";
+            $params_string = "";
             foreach($params as $key=>$value) { $params_string .= $key.'='.$value.'&'; }
             rtrim($params_string, '&');
             curl_setopt($ch,CURLOPT_POST, count($params));
@@ -241,7 +242,9 @@ abstract class LatchAuth {
      * such as non 11paths specific headers
      */
     private function getSerializedHeaders($xHeaders) {
-        if($xHeaders != null) {
+	    $result_to_return = "";
+	    $error = false;
+	    if($xHeaders != null) {
             $headers = array_change_key_case($xHeaders, CASE_LOWER);
             ksort($headers);
             $serializedHeaders = "";
@@ -249,28 +252,29 @@ abstract class LatchAuth {
             foreach($headers as $key=>$value) {
                 if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
                     error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
-                    return null;
+                    break;
+                } else {
+	                $serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
                 }
-                $serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
             }
-            return trim($serializedHeaders, "utf-8");
-        } else {
-            return "";
+		    if($error === false) {
+			    $result_to_return = trim($serializedHeaders, "utf-8");
+		    }
         }
+	    return $result_to_return;
     }
 
     private function getSerializedParams($params) {
+	    $result = "";
         if($params != null) {
             ksort($params);
             $serializedParams = "";
-
             foreach($params as $key=>$value) {
                 $serializedParams .= $key . "=" . $value . "&";
             }
-            return trim($serializedParams, "&");
-        } else {
-            return "";
+            $result = trim($serializedParams, "&");
         }
+	    return $result;
     }
 
     /**

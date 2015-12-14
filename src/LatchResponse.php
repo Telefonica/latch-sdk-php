@@ -35,8 +35,8 @@ use ElevenPaths\Latch\Error as Error;
  */
 class LatchResponse {
 
-	public $data = null;
-	public $error = null;
+	private $data = null;
+	private $error = null;
 
     /**
      *
@@ -94,11 +94,11 @@ class LatchResponse {
 	public function toJSON() {
 		$response = array();
 		if(!empty($this->data)) {
-			$response["data"] = $data;
+			$response["data"] = $this->data;
 		}
 		
 		if(!empty($error)) {
-			$response["error"] = $error;
+			$response["error"] = $this->error;
 		} 
 		return json_encode($response);
 	}
