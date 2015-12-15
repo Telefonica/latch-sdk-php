@@ -32,23 +32,23 @@ use DateTimeZone;
  * Use the methods inside LatchAPI and LatchUser class.
  */
 abstract class LatchAuth {
-
-    private static $API_VERSION = "1.0";
+    private static $API_VERSION = "1.1";
     public static $API_HOST = "https://latch.elevenpaths.com";
 
     // App API
-    public static $API_CHECK_STATUS_URL = "/api/1.0/status";
-    public static $API_PAIR_URL = "/api/1.0/pair";
-    public static $API_PAIR_WITH_ID_URL = "/api/1.0/pairWithId";
-    public static $API_UNPAIR_URL =  "/api/1.0/unpair";
-    public static $API_LOCK_URL =  "/api/1.0/lock";
-    public static $API_UNLOCK_URL =  "/api/1.0/unlock";
-    public static $API_HISTORY_URL =  "/api/1.0/history";
-    public static $API_OPERATION_URL =  "/api/1.0/operation";
+    public static $API_CHECK_STATUS_URL = "/api/1.1/status";
+    public static $API_PAIR_URL = "/api/1.1/pair";
+    public static $API_PAIR_WITH_ID_URL = "/api/1.1/pairWithId";
+    public static $API_UNPAIR_URL =  "/api/1.1/unpair";
+    public static $API_LOCK_URL =  "/api/1.1/lock";
+    public static $API_UNLOCK_URL =  "/api/1.1/unlock";
+    public static $API_HISTORY_URL =  "/api/1.1/history";
+    public static $API_OPERATION_URL =  "/api/1.1/operation";
+    public static $API_INSTANCE_URL = "/api/1.1/instance";
 
     // User API
-    public static $API_APPLICATION_URL = "/api/1.0/application";
-    public static $API_SUBSCRIPTION_URL = "/api/1.0/subscription";
+    public static $API_APPLICATION_URL = "/api/1.1/application";
+    public static $API_SUBSCRIPTION_URL = "/api/1.1/subscription";
 
     public static $AUTHORIZATION_HEADER_NAME = "Authorization";
     public static $DATE_HEADER_NAME = "X-11Paths-Date";
@@ -150,10 +150,9 @@ abstract class LatchAuth {
         curl_setopt($ch, CURLOPT_PROXY, self::$PROXY_HOST);
 
         if ($method == "PUT" || $method == "POST"){
-            $params_string = "";
-            foreach($params as $key=>$value) { $params_string .= $key.'='.$value.'&'; }
-            rtrim($params_string, '&');
-            curl_setopt($ch,CURLOPT_POST, count($params));
+	        $params_string = self::getSerializedParams($params);
+	        rtrim($params_string, '&');
+	        curl_setopt($ch,CURLOPT_POST, count($params));
             curl_setopt($ch,CURLOPT_POSTFIELDS, $params_string);
         }
 
@@ -209,7 +208,6 @@ abstract class LatchAuth {
         //error_log($HTTPMethod);
         //error_log($queryString);
         //error_log($utc);
-
         $stringToSign = trim(strtoupper($HTTPMethod)) . "\n" .
             $utc . "\n" .
             $this->getSerializedHeaders($xHeaders) . "\n" .
@@ -231,7 +229,6 @@ abstract class LatchAuth {
         $headers = array();
         $headers[self::$AUTHORIZATION_HEADER_NAME] = $authorizationHeader;
         $headers[self::$DATE_HEADER_NAME] = $utc;
-
         return $headers;
     }
 
@@ -253,29 +250,46 @@ abstract class LatchAuth {
                 if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
                     error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
                     break;
-                } else {
-	                $serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
-                }
-            }
-		    if($error === false) {
-			    $result_to_return = trim($serializedHeaders, "utf-8");
-		    }
-        }
-	    return $result_to_return;
-    }
+				} else {
+					$serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
+				}
+			}
+			if($error === false) {
+				$result_to_return = trim($serializedHeaders, "utf-8");
+			}
+		}
+		return $result_to_return;
+	}
 
-    private function getSerializedParams($params) {
-	    $result = "";
-        if($params != null) {
-            ksort($params);
-            $serializedParams = "";
-            foreach($params as $key=>$value) {
-                $serializedParams .= $key . "=" . $value . "&";
-            }
-            $result = trim($serializedParams, "&");
-        }
-	    return $result;
-    }
+	/**
+	 * @params array An array with params
+	 * @arr_name string a String used in case if we have to serialize and array witch has a key in parent array. By default is null
+	 * @count integer Counter to know what level has a main array. By default is 1
+	 */
+	private function getSerializedParams($params, $arr_name = null, $count = 1) {
+		$result = "";
+		if($params != null && !empty($params)) {
+			ksort($params);
+			$serializedParams = "";
+			foreach($params as $key=>$value) {
+				if(gettype($value) == "array"){
+					if($count < 2){
+						$serializedParams .= self::getSerializedParams($value,$key,++$count);
+					} else {
+						throw new \Exception("Passed array can't more that 1 sub-array");
+					}
+				} else {
+					if($arr_name != null){
+						$serializedParams .= $arr_name . "=" . $value . "&";
+					} else {
+						$serializedParams .= $key . "=" . $value . "&";
+					}
+				}
+			}
+			$result = trim($serializedParams, "&");
+		}
+		return $result;
+	}
 
     /**
      *

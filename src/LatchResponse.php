@@ -35,8 +35,8 @@ use ElevenPaths\Latch\Error as Error;
  */
 class LatchResponse {
 
-	private $data = null;
-	private $error = null;
+	public $data = null;
+	public $error = null;
 
     /**
      *
