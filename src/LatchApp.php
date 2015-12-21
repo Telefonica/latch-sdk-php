@@ -110,15 +110,25 @@ class LatchApp extends LatchAuth {
 	}
 
 	public function lock($accountId, $operationId = null, $instance = null){
-		return $this->HTTP_POST_proxy(self::$API_LOCK_URL . "/" . $accountId.
-			($operationId != null && !empty($operationId) ? "/op/".$operationId : "").
-			($instance != null && !empty($instance) ? "/i/".$instance : ""), array());
+		$url = self::$API_LOCK_URL . "/" . $accountId;
+		if($accountId != null && !empty($accountId)){
+			$url .= "/op/".$operationId;
+		}
+		if($instance != null && !empty($instance)){
+			$url .= "/i/".$instance;
+		}
+		return $this->HTTP_POST_proxy($url,[]);
 	}
 
 	public function unlock($accountId, $operationId = null, $instance = null){
-		return $this->HTTP_POST_proxy(self::$API_LOCK_URL . "/" . $accountId.
-			($operationId != null && !empty($operationId) ? "/op/".$operationId : "").
-			($instance != null && !empty($instance) ? "/i/".$instance : ""), array());
+		$url = self::$API_UNLOCK_URL . "/" . $accountId;
+		if($accountId != null && !empty($accountId)){
+			$url .= "/op/".$operationId;
+		}
+		if($instance != null && !empty($instance)){
+			$url .= "/i/".$instance;
+		}
+		return $this->HTTP_POST_proxy($url,[]);
 	}
 
 	public function history($accountId, $from=0, $to=null) {

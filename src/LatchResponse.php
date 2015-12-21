@@ -57,7 +57,7 @@ class LatchResponse {
 	
 	/**
 	 *
-	 * @return JsonObject the data part of the API response
+	 * @return JSONObject the data part of the API response
 	 */
 	public function getData() {
 		return $this->data;

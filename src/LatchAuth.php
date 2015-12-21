@@ -232,24 +232,24 @@ abstract class LatchAuth {
         return $headers;
     }
 
-    /**
-     * Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received
-     * @param string $xHeaders a non necessarily ordered map of the HTTP headers to be ordered without duplicates.
-     * @return string a String with the serialized headers, an empty string if no headers are passed, or null if there's a problem
-     * such as non 11paths specific headers
-     */
-    private function getSerializedHeaders($xHeaders) {
-	    $result_to_return = "";
-	    $error = false;
-	    if($xHeaders != null) {
-            $headers = array_change_key_case($xHeaders, CASE_LOWER);
-            ksort($headers);
-            $serializedHeaders = "";
-
-            foreach($headers as $key=>$value) {
-                if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
-                    error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
-                    break;
+	/**
+	 * Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received
+	 * @param string $xHeaders a non necessarily ordered map of the HTTP headers to be ordered without duplicates.
+	 * @return string a String with the serialized headers, an empty string if no headers are passed, or null if there's a problem
+	 * such as non 11paths specific headers
+	*/
+	private function getSerializedHeaders($xHeaders) {
+		$result_to_return = "";
+		$error = false;
+		if($xHeaders != null) {
+			$headers = array_change_key_case($xHeaders, CASE_LOWER);
+			ksort($headers);
+			$serializedHeaders = "";
+			foreach($headers as $key=>$value) {
+				if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
+					error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
+					$error = true;
+					break;
 				} else {
 					$serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
 				}
@@ -262,28 +262,23 @@ abstract class LatchAuth {
 	}
 
 	/**
-	 * @params array An array with params
-	 * @arr_name string a String used in case if we have to serialize and array witch has a key in parent array. By default is null
-	 * @count integer Counter to know what level has a main array. By default is 1
+	 * @param array $params An array with params
+	 * @return string Returns serialized params
 	 */
-	private function getSerializedParams($params, $arr_name = null, $count = 1) {
+	private function getSerializedParams($params) {
 		$result = "";
 		if($params != null && !empty($params)) {
 			ksort($params);
 			$serializedParams = "";
 			foreach($params as $key=>$value) {
 				if(gettype($value) == "array"){
-					if($count < 2){
-						$serializedParams .= self::getSerializedParams($value,$key,++$count);
-					} else {
-						throw new \Exception("Passed array can't more that 1 sub-array");
+					foreach($params[$key] as $value2){
+						if(gettype($value2) == "string"){
+							$serializedParams .= $key . "=" . $value2 . "&";
+						}
 					}
 				} else {
-					if($arr_name != null){
-						$serializedParams .= $arr_name . "=" . $value . "&";
-					} else {
-						$serializedParams .= $key . "=" . $value . "&";
-					}
+					$serializedParams .= $key . "=" . $params[$key] . "&";
 				}
 			}
 			$result = trim($serializedParams, "&");
@@ -292,7 +287,6 @@ abstract class LatchAuth {
 	}
 
     /**
-     *
      * @return string a string representation of the current time in UTC to be used in a Date HTTP Header
      */
     private function getCurrentUTC() {
