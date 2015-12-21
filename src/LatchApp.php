@@ -111,7 +111,7 @@ class LatchApp extends LatchAuth {
 
 	public function lock($accountId, $operationId = null, $instance = null){
 		$url = self::$API_LOCK_URL . "/" . $accountId;
-		if($accountId != null && !empty($accountId)){
+		if($operationId != null && !empty($operationId)){
 			$url .= "/op/".$operationId;
 		}
 		if($instance != null && !empty($instance)){
@@ -122,7 +122,7 @@ class LatchApp extends LatchAuth {
 
 	public function unlock($accountId, $operationId = null, $instance = null){
 		$url = self::$API_UNLOCK_URL . "/" . $accountId;
-		if($accountId != null && !empty($accountId)){
+		if($operationId != null && !empty($operationId)){
 			$url .= "/op/".$operationId;
 		}
 		if($instance != null && !empty($instance)){
