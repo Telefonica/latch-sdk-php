@@ -271,7 +271,7 @@ abstract class LatchAuth {
 			ksort($params);
 			$serializedParams = "";
 			foreach($params as $key=>$value) {
-				if(gettype($value) == "array"){
+				if(gettype($value) == "array" && !empty($value)){
 					foreach($params[$key] as $value2){
 						if(gettype($value2) == "string"){
 							$serializedParams .= $key . "=" . $value2 . "&";

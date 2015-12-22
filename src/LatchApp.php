@@ -72,7 +72,7 @@ class LatchApp extends LatchAuth {
 			$url .= "/op/".$operationId;
 		}
 		if($instanceName != null && !empty($instanceName)){
-			if(gettype($instanceName) == "array"){
+			if(gettype($instanceName) == "array" && count($instanceName) > 0){
 				foreach($instanceName as $key=>$value){
 					$arr["instances"][] = $value;
 				}
