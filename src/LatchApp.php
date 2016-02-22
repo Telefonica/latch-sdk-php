@@ -66,7 +66,7 @@ class LatchApp extends LatchAuth {
 	}
 
 	public function addInstance($accountId, $operationId = null, $instanceName = null){
-		$arr = [];
+		$arr = array();
 		$url = self::$API_INSTANCE_URL."/".$accountId;
 		if($operationId != null && !empty($operationId)){
 			$url .= "/op/".$operationId;
