@@ -32,23 +32,23 @@ use DateTimeZone;
  * Use the methods inside LatchAPI and LatchUser class.
  */
 abstract class LatchAuth {
-
-    private static $API_VERSION = "1.0";
+    private static $API_VERSION = "1.1";
     public static $API_HOST = "https://latch.elevenpaths.com";
 
     // App API
-    public static $API_CHECK_STATUS_URL = "/api/1.0/status";
-    public static $API_PAIR_URL = "/api/1.0/pair";
-    public static $API_PAIR_WITH_ID_URL = "/api/1.0/pairWithId";
-    public static $API_UNPAIR_URL =  "/api/1.0/unpair";
-    public static $API_LOCK_URL =  "/api/1.0/lock";
-    public static $API_UNLOCK_URL =  "/api/1.0/unlock";
-    public static $API_HISTORY_URL =  "/api/1.0/history";
-    public static $API_OPERATION_URL =  "/api/1.0/operation";
+    public static $API_CHECK_STATUS_URL = "/api/1.1/status";
+    public static $API_PAIR_URL = "/api/1.1/pair";
+    public static $API_PAIR_WITH_ID_URL = "/api/1.1/pairWithId";
+    public static $API_UNPAIR_URL =  "/api/1.1/unpair";
+    public static $API_LOCK_URL =  "/api/1.1/lock";
+    public static $API_UNLOCK_URL =  "/api/1.1/unlock";
+    public static $API_HISTORY_URL =  "/api/1.1/history";
+    public static $API_OPERATION_URL =  "/api/1.1/operation";
+    public static $API_INSTANCE_URL = "/api/1.1/instance";
 
     // User API
-    public static $API_APPLICATION_URL = "/api/1.0/application";
-    public static $API_SUBSCRIPTION_URL = "/api/1.0/subscription";
+    public static $API_APPLICATION_URL = "/api/1.1/application";
+    public static $API_SUBSCRIPTION_URL = "/api/1.1/subscription";
 
     public static $AUTHORIZATION_HEADER_NAME = "Authorization";
     public static $DATE_HEADER_NAME = "X-11Paths-Date";
@@ -84,13 +84,14 @@ abstract class LatchAuth {
      * @return string the specified part from the header or an empty string if not existent
      */
     private static function getPartFromHeader($part, $header) {
-        if (!empty($header)) {
-            $parts = explode(self::$AUTHORIZATION_HEADER_FIELD_SEPARATOR, $header);
-            if(count($parts) > $part) {
-                return $parts[$part];
-            }
-        }
-        return "";
+	    $result_to_return = "";
+	    if (!empty($header)) {
+		    $parts = explode(self::$AUTHORIZATION_HEADER_FIELD_SEPARATOR, $header);
+		    if(count($parts) > $part) {
+			    $result_to_return = $parts[$part];
+		    }
+	    }
+	    return $result_to_return;
     }
 
     /**
@@ -149,10 +150,9 @@ abstract class LatchAuth {
         curl_setopt($ch, CURLOPT_PROXY, self::$PROXY_HOST);
 
         if ($method == "PUT" || $method == "POST"){
-            $params_string="";
-            foreach($params as $key=>$value) { $params_string .= $key.'='.$value.'&'; }
-            rtrim($params_string, '&');
-            curl_setopt($ch,CURLOPT_POST, count($params));
+	        $params_string = self::getSerializedParams($params);
+	        rtrim($params_string, '&');
+	        curl_setopt($ch,CURLOPT_POST, count($params));
             curl_setopt($ch,CURLOPT_POSTFIELDS, $params_string);
         }
 
@@ -208,7 +208,6 @@ abstract class LatchAuth {
         //error_log($HTTPMethod);
         //error_log($queryString);
         //error_log($utc);
-
         $stringToSign = trim(strtoupper($HTTPMethod)) . "\n" .
             $utc . "\n" .
             $this->getSerializedHeaders($xHeaders) . "\n" .
@@ -230,51 +229,64 @@ abstract class LatchAuth {
         $headers = array();
         $headers[self::$AUTHORIZATION_HEADER_NAME] = $authorizationHeader;
         $headers[self::$DATE_HEADER_NAME] = $utc;
-
         return $headers;
     }
 
+	/**
+	 * Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received
+	 * @param string $xHeaders a non necessarily ordered map of the HTTP headers to be ordered without duplicates.
+	 * @return string a String with the serialized headers, an empty string if no headers are passed, or null if there's a problem
+	 * such as non 11paths specific headers
+	*/
+	private function getSerializedHeaders($xHeaders) {
+		$result_to_return = "";
+		$error = false;
+		if($xHeaders != null) {
+			$headers = array_change_key_case($xHeaders, CASE_LOWER);
+			ksort($headers);
+			$serializedHeaders = "";
+			foreach($headers as $key=>$value) {
+				if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
+					error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
+					$error = true;
+					break;
+				} else {
+					$serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
+				}
+			}
+			if($error === false) {
+				$result_to_return = trim($serializedHeaders, "utf-8");
+			}
+		}
+		return $result_to_return;
+	}
+
+	/**
+	 * @param array $params An array with params
+	 * @return string Returns serialized params
+	 */
+	private function getSerializedParams($params) {
+		$result = "";
+		if($params != null && !empty($params)) {
+			ksort($params);
+			$serializedParams = "";
+			foreach($params as $key=>$value) {
+				if(gettype($value) == "array" && !empty($value)){
+					foreach($params[$key] as $value2){
+						if(gettype($value2) == "string"){
+							$serializedParams .= $key . "=" . $value2 . "&";
+						}
+					}
+				} else {
+					$serializedParams .= $key . "=" . $params[$key] . "&";
+				}
+			}
+			$result = trim($serializedParams, "&");
+		}
+		return $result;
+	}
+
     /**
-     * Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received
-     * @param string $xHeaders a non necessarily ordered map of the HTTP headers to be ordered without duplicates.
-     * @return string a String with the serialized headers, an empty string if no headers are passed, or null if there's a problem
-     * such as non 11paths specific headers
-     */
-    private function getSerializedHeaders($xHeaders) {
-        if($xHeaders != null) {
-            $headers = array_change_key_case($xHeaders, CASE_LOWER);
-            ksort($headers);
-            $serializedHeaders = "";
-
-            foreach($headers as $key=>$value) {
-                if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
-                    error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
-                    return null;
-                }
-                $serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
-            }
-            return trim($serializedHeaders, "utf-8");
-        } else {
-            return "";
-        }
-    }
-
-    private function getSerializedParams($params) {
-        if($params != null) {
-            ksort($params);
-            $serializedParams = "";
-
-            foreach($params as $key=>$value) {
-                $serializedParams .= $key . "=" . $value . "&";
-            }
-            return trim($serializedParams, "&");
-        } else {
-            return "";
-        }
-    }
-
-    /**
-     *
      * @return string a string representation of the current time in UTC to be used in a Date HTTP Header
      */
     private function getCurrentUTC() {

@@ -57,7 +57,7 @@ class LatchResponse {
 	
 	/**
 	 *
-	 * @return JsonObject the data part of the API response
+	 * @return JSONObject the data part of the API response
 	 */
 	public function getData() {
 		return $this->data;
@@ -94,11 +94,11 @@ class LatchResponse {
 	public function toJSON() {
 		$response = array();
 		if(!empty($this->data)) {
-			$response["data"] = $data;
+			$response["data"] = $this->data;
 		}
 		
 		if(!empty($error)) {
-			$response["error"] = $error;
+			$response["error"] = $this->error;
 		} 
 		return json_encode($response);
 	}

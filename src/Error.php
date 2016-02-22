@@ -33,9 +33,11 @@ class Error {
 	 */
 	function __construct($json) {
 		$json = is_string($json)? json_decode($json) : $json;
-		if(array_key_exists("code", $json) && array_key_exists("message", $json)) {
-			$this->code = $json->{"code"};
-			$this->message = $json->{"message"};
+		if(json_last_error() == JSON_ERROR_NONE){
+			if(array_key_exists("code", $json) && array_key_exists("message", $json)) {
+				$this->code = $json->{"code"};
+				$this->message = $json->{"message"};
+			}
 		} else {
 			error_log("Error creating error object from string " . $json);
 		}
@@ -54,9 +56,9 @@ class Error {
 	 * @return JsonObject a Json object with the code and message of the error
 	 */
 	public function toJson() {
-		$error = new JsonObject();
-		$error.addProperty("code", $this->code);
-		$error.addProperty("message", $this->message);
-		return $error;
+		return json_encode([
+			"code" => $this->code,
+			"message" => $this->message
+		]);
 	}
 }
