@@ -117,7 +117,7 @@ class LatchApp extends LatchAuth {
 		if($instance != null && !empty($instance)){
 			$url .= "/i/".$instance;
 		}
-		return $this->HTTP_POST_proxy($url,[]);
+		return $this->HTTP_POST_proxy($url,array());
 	}
 
 	public function unlock($accountId, $operationId = null, $instance = null){
@@ -128,7 +128,7 @@ class LatchApp extends LatchAuth {
 		if($instance != null && !empty($instance)){
 			$url .= "/i/".$instance;
 		}
-		return $this->HTTP_POST_proxy($url,[]);
+		return $this->HTTP_POST_proxy($url,array());
 	}
 
 	public function history($accountId, $from=0, $to=null) {
