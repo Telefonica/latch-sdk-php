@@ -20,20 +20,24 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+namespace ElevenPaths\Latch;
+
 class Error {
+
 	private $code;
 	private $message;
-	
-	
+
 	/**
 	 * 
 	 * @param string $json a Json representation of an error with "code" and "message" elements
 	 */
 	function __construct($json) {
 		$json = is_string($json)? json_decode($json) : $json;
-		if(array_key_exists("code", $json) && array_key_exists("message", $json)) {
-			$this->code = $json->{"code"};
-			$this->message = $json->{"message"};
+		if(json_last_error() == JSON_ERROR_NONE){
+			if(array_key_exists("code", $json) && array_key_exists("message", $json)) {
+				$this->code = $json->{"code"};
+				$this->message = $json->{"message"};
+			}
 		} else {
 			error_log("Error creating error object from string " . $json);
 		}
@@ -52,14 +56,9 @@ class Error {
 	 * @return Json representation with the code and message of the error
 	 */
 	public function toJson() {
-		$error = array();
-		if(!empty($this->code)) {
-		    $error["code"] = $this->code;
-		}
-		
-		if(!empty($this->message)) {
-		    $error["message"] = $this->message;
-		}
-		return json_encode($error);
+		return json_encode(array(
+			"code" => $this->code,
+			"message" => $this->message
+		));
 	}
 }
