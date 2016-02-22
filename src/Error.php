@@ -56,9 +56,9 @@ class Error {
 	 * @return JsonObject a Json object with the code and message of the error
 	 */
 	public function toJson() {
-		return json_encode([
+		return json_encode(array(
 			"code" => $this->code,
 			"message" => $this->message
-		]);
+		));
 	}
 }
