@@ -80,7 +80,7 @@ class LatchApp extends LatchAuth {
 				$arr["instances"] = $instanceName;
 			}
 		}
-		return $this->HTTP_POST_proxy($url,$arr);
+		return $this->HTTP_PUT_proxy($url,$arr);
 	}
 
 	public function removeInstance($accountId, $operationId = null, $instanceName = null){
