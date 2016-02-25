@@ -232,59 +232,60 @@ abstract class LatchAuth {
         return $headers;
     }
 
-	/**
-	 * Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received
-	 * @param string $xHeaders a non necessarily ordered map of the HTTP headers to be ordered without duplicates.
-	 * @return string a String with the serialized headers, an empty string if no headers are passed, or null if there's a problem
-	 * such as non 11paths specific headers
-	*/
-	private function getSerializedHeaders($xHeaders) {
-		$result_to_return = "";
-		$error = false;
-		if($xHeaders != null) {
-			$headers = array_change_key_case($xHeaders, CASE_LOWER);
-			ksort($headers);
-			$serializedHeaders = "";
-			foreach($headers as $key=>$value) {
-				if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
-					error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
-					$error = true;
-					break;
-				} else {
-					$serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
-				}
-			}
-			if($error === false) {
-				$result_to_return = trim($serializedHeaders, "utf-8");
-			}
-		}
-		return $result_to_return;
-	}
+    /**
+     * Prepares and returns a string ready to be signed from the 11-paths specific HTTP headers received
+     * @param string $xHeaders a non necessarily ordered map of the HTTP headers to be ordered without duplicates.
+     * @return string a String with the serialized headers, an empty string if no headers are passed, or null if there's a problem
+     * such as non 11paths specific headers
+    */
+    private function getSerializedHeaders($xHeaders) {
+        $result_to_return = "";
+        $error = false;
+        if($xHeaders != null) {
+            $headers = array_change_key_case($xHeaders, CASE_LOWER);
+            ksort($headers);
+            $serializedHeaders = "";
+            foreach($headers as $key=>$value) {
+                if(strncmp(strtolower($key), strtolower(self::$X_11PATHS_HEADER_PREFIX), strlen(self::$X_11PATHS_HEADER_PREFIX))==0) {
+                    error_log("Error serializing headers. Only specific " . self::$X_11PATHS_HEADER_PREFIX . " headers need to be singed");
+                    $error = true;
+                    break;
+                } else {
+                    $serializedHeaders .= $key . self::$X_11PATHS_HEADER_SEPARATOR . $value . " ";
+                }
+            }
+            if($error === false) {
+                $result_to_return = trim($serializedHeaders, "utf-8");
+            }
+        }
+        return $result_to_return;
+    }
 
-	/**
-	 * @param array $params An array with params
-	 * @return string Returns serialized params
-	 */
-	private function getSerializedParams($params) {
-		$result = "";
-		if($params != null && !empty($params)) {
-			ksort($params);
-			$serializedParams = "";
-			foreach($params as $key=>$value) {
-				if(gettype($value) == "array" && !empty($value)){
-					foreach($params[$key] as $value2){
-						if(gettype($value2) == "string"){
-							$serializedParams .= $key . "=" . $value2 . "&";
-						}
-					}
-				} else {
-					$serializedParams .= $key . "=" . $params[$key] . "&";
-				}
-			}
-			$result = trim($serializedParams, "&");
-		}
-		return $result;
-	}
+    /**
+     * @param array $params An array with params
+     * @return string Returns serialized params
+     */
+    private function getSerializedParams($params) {
+        $result = "";
+        if($params != null && !empty($params)) {
+            ksort($params);
+            $serializedParams = "";
+            foreach($params as $key=>$value) {
+                if(gettype($value) == "array" && !empty($value)){
+                    ksort($params[$key]);
+                    foreach($params[$key] as $value2){
+                        if(gettype($value2) == "string"){
+                            $serializedParams .= $key . "=" . $value2 . "&";
+                        }
+                    }
+                } else {
+                    $serializedParams .= $key . "=" . $params[$key] . "&";
+                }
+            }
+            $result = trim($serializedParams, "&");
+        }
+        return $result;
+    }
 
     /**
      * @return string a string representation of the current time in UTC to be used in a Date HTTP Header
