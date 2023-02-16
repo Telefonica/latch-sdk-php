@@ -31,7 +31,7 @@ use ElevenPaths\Latch\LatchApp as LatchApp;
 final class Latch extends LatchApp {
 
     /**
-     * Create an instance of the class with the Application ID and secret obtained from Eleven Paths
+     * Create an instance of the class with the Application ID and secret obtained from Telefonica Digital
      * @param $appId
      * @param $secretKey
      * @deprecated

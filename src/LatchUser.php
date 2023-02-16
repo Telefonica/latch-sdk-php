@@ -32,7 +32,7 @@ use ElevenPaths\Latch\LatchResponse as LatchResponse;
 class LatchUser extends LatchAuth {
 
     /**
-     * Create an instance of the class with the User ID and secret obtained from Eleven Paths
+     * Create an instance of the class with the User ID and secret obtained from Telefonica Digital
      * @param $userId
      * @param $secretKey
      */
