@@ -3,7 +3,7 @@
 /*
   Latch PHP SDK - Set of  reusable classes to  allow developers integrate Latch on
   their applications.
-  Copyright (C) 2013 Eleven Paths
+  Copyright (C) 2023 Telefonica Digital
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,7 @@ use DateTimeZone;
  */
 abstract class LatchAuth {
     private static $API_VERSION = "1.1";
-    public static $API_HOST = "https://latch.elevenpaths.com";
+    public static $API_HOST = "https://latch.telefonica.com";
 
     // App API
     public static $API_CHECK_STATUS_URL = "/api/1.1/status";
@@ -127,7 +127,7 @@ abstract class LatchAuth {
     protected $secretKey;
 
     /**
-     * Create an instance of the class with the Application/User ID and secret obtained from Eleven Paths
+     * Create an instance of the class with the Application/User ID and secret obtained from Telefonica Digital
      * @param $appId
      * @param $secretKey
      */

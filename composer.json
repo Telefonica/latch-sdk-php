@@ -9,12 +9,12 @@
     "php",
     "latch"
   ],
-  "homepage": "https://latch.elevenpaths.com/",
+  "homepage": "https://latch.telefonica.com/",
   "license": "LGPL-2.1+",
   "authors": [
     {
-      "name" : "ElevenPaths",
-      "email": "elevenpaths@elevenpaths.com"
+      "name" : "TelefonicaDigital",
+      "email": "soporte.latch@telefonica.com"
     }
   ],
   "require": {
