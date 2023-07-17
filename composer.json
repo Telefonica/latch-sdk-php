@@ -1,7 +1,7 @@
 {
-  "name": "ElevenPaths/latch-sdk-php",
+  "name": "Telefonica/latch-sdk-php",
   "type": "sdk",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Latch SDK PHP",
   "keywords": [
     "api",
@@ -22,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ElevenPaths\\Latch\\": "src/"
+      "Telefonica\\Latch\\": "src/"
     }
   }
 }

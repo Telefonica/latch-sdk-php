@@ -20,10 +20,10 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace ElevenPaths\Latch;
+namespace Telefonica\Latch;
 
-use ElevenPaths\Latch\LatchResponse as LatchResponse;
-use ElevenPaths\Latch\Error as Error;
+use Telefonica\Latch\LatchResponse as LatchResponse;
+use Telefonica\Latch\Error as Error;
 use DateTime;
 use DateTimeZone;
 

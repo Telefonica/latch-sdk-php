@@ -20,17 +20,15 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace ElevenPaths\Latch;
+namespace Telefonica\Latch;
 
-use ElevenPaths\Latch\Error as Error;
+use Telefonica\Latch\Error as Error;
 
 /**
  * This class models a response from any of the endpoints in the Latch API.
  * It consists of a "data" and an "error" elements. Although normally only one of them will be
  * present, they are not mutually exclusive, since errors can be non fatal, and therefore a response
  * could have valid information in the data field and at the same time inform of an error.
- *
- * @author Jose Palazon <jose@11paths.com>
  *
  */
 class LatchResponse {
