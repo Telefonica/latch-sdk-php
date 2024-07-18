@@ -42,12 +42,13 @@ class LatchResponse {
      * @internal param a $json json string received from one of the methods of the Latch API
      */
 	public function __construct($jsonString) {
-		$json = json_decode($jsonString);
+		$json = json_decode($jsonString, false);
+		var_dump($json);
 		if(!is_null($json)) {
-			if (array_key_exists("data", $json)) {
+			if (isset($json->{"data"})) {
 				$this->data = $json->{"data"};
 			}
-			if (array_key_exists("error", $json)) {
+			if (isset($json->{"error"})) {
 				$this->error = new Error($json->{"error"});
 			} 
 		}
