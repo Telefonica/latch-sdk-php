@@ -9,16 +9,16 @@
     "php",
     "latch"
   ],
-  "homepage": "https://latch.telefonica.com/",
+  "homepage": "https://latch.tu.com/",
   "license": "LGPL-2.1+",
   "authors": [
     {
-      "name" : "TelefonicaDigital",
+      "name" : "Telefonica Innovacion Digital",
       "email": "soporte.latch@telefonica.com"
     }
   ],
   "require": {
-    "php" : ">=5.6.32"
+    "php" : ">=8.2.0"
   },
   "autoload": {
     "psr-4": {
