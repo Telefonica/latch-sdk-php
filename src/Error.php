@@ -34,7 +34,7 @@ class Error {
 	function __construct($json) {
 		$json = is_string($json)? json_decode($json) : $json;
 		if(json_last_error() == JSON_ERROR_NONE){
-			if(array_key_exists("code", $json) && array_key_exists("message", $json)) {
+			if(isset($json->{"code"}) && isset($json->{"message"})) {
 				$this->code = $json->{"code"};
 				$this->message = $json->{"message"};
 			}

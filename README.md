@@ -3,11 +3,11 @@
 
 #### PREREQUISITES ####
 
-* PHP 5.3 or above.
+* PHP 8.2 or above.
 
-* Read API documentation (https://latch.telefonica.com/www/developers/doc_api).
+* Read API documentation (https://latch.tu.com/www/developers/doc_api).
 
-* To get the "Application ID" and "Secret", (fundamental values for integrating Latch in any application), it’s necessary to register a developer account in Latch's website: https://latch.telefonica.com. On the upper right side, click on "Developer area".
+* To get the "Application ID" and "Secret", (fundamental values for integrating Latch in any application), it’s necessary to register a developer account in Latch's website: https://latch.tu.com. On the upper right side, click on "Login".
 
 
 #### USING THE SDK IN PHP ####

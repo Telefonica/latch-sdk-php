@@ -32,23 +32,23 @@ use DateTimeZone;
  * Use the methods inside LatchAPI and LatchUser class.
  */
 abstract class LatchAuth {
-    private static $API_VERSION = "1.1";
-    public static $API_HOST = "https://latch.telefonica.com";
+    private static $API_VERSION = "2.0";
+    public static $API_HOST = "https://latch.tu.com";
 
     // App API
-    public static $API_CHECK_STATUS_URL = "/api/1.1/status";
-    public static $API_PAIR_URL = "/api/1.1/pair";
-    public static $API_PAIR_WITH_ID_URL = "/api/1.1/pairWithId";
-    public static $API_UNPAIR_URL =  "/api/1.1/unpair";
-    public static $API_LOCK_URL =  "/api/1.1/lock";
-    public static $API_UNLOCK_URL =  "/api/1.1/unlock";
-    public static $API_HISTORY_URL =  "/api/1.1/history";
-    public static $API_OPERATION_URL =  "/api/1.1/operation";
-    public static $API_INSTANCE_URL = "/api/1.1/instance";
+    public static $API_CHECK_STATUS_URL = "/api/2.0/status";
+    public static $API_PAIR_URL = "/api/2.0/pair";
+    public static $API_PAIR_WITH_ID_URL = "/api/2.0/pairWithId";
+    public static $API_UNPAIR_URL =  "/api/2.0/unpair";
+    public static $API_LOCK_URL =  "/api/2.0/lock";
+    public static $API_UNLOCK_URL =  "/api/2.0/unlock";
+    public static $API_HISTORY_URL =  "/api/2.0/history";
+    public static $API_OPERATION_URL =  "/api/2.0/operation";
+    public static $API_INSTANCE_URL = "/api/2.0/instance";
 
     // User API
-    public static $API_APPLICATION_URL = "/api/1.1/application";
-    public static $API_SUBSCRIPTION_URL = "/api/1.1/subscription";
+    public static $API_APPLICATION_URL = "/api/2.0/application";
+    public static $API_SUBSCRIPTION_URL = "/api/2.0/subscription";
 
     public static $AUTHORIZATION_HEADER_NAME = "Authorization";
     public static $DATE_HEADER_NAME = "X-11Paths-Date";
