@@ -43,7 +43,6 @@ class LatchResponse {
      */
 	public function __construct($jsonString) {
 		$json = json_decode($jsonString, false);
-		var_dump($json);
 		if(!is_null($json)) {
 			if (isset($json->{"data"})) {
 				$this->data = $json->{"data"};
