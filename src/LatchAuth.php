@@ -45,6 +45,8 @@ abstract class LatchAuth {
     public static $API_HISTORY_URL =  "/api/2.0/history";
     public static $API_OPERATION_URL =  "/api/2.0/operation";
     public static $API_INSTANCE_URL = "/api/2.0/instance";
+    public static $API_TOTP_URL= "/api/2.0/totps";
+    public static $API_CONTROL_STATUS_CHECK_URL = "/api/2.0/control-status";
 
     // User API
     public static $API_APPLICATION_URL = "/api/2.0/application";
