@@ -217,7 +217,7 @@ abstract class LatchAuth {
 
         if ($params != null && sizeof($params) > 0){
             $serializedParams = $this->getSerializedParams($params);
-            if ($serializedParams != null && sizeof($serializedParams) > 0){
+            if ($serializedParams != null && strlen($serializedParams) > 0){
                 $stringToSign = trim($stringToSign . "\n" . $serializedParams);
             }
         }
