@@ -47,7 +47,7 @@
         if ($responseData->operations->$elementId->status === 'on') {
             echo "Your latch is open and you are able to perform action\n";
         } elseif ($responseData->operations->$elementId->status === 'off') {
-            echo "Your latch is lock and you can not be allowed to perform action\n";
+            echo "Your latch is locked and you are not allowed to perform action\n";
         } else {
             echo "Error processing the response\n";
             exit(1);
