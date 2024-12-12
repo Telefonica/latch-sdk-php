@@ -1,7 +1,7 @@
 {
   "name": "telefonica/latch-sdk-php",
   "type": "sdk",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Latch SDK PHP",
   "keywords": [
     "api",
