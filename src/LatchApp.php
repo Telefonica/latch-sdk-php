@@ -3,7 +3,7 @@
 /*
   Latch PHP SDK - Set of  reusable classes to  allow developers integrate Latch on
   their applications.
-  Copyright (C) 2023 Telefonica Digital
+  Copyright (C) 2024 Telefonica Innovación Digital
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -44,8 +44,20 @@ class LatchApp extends LatchAuth {
 		return $this->HTTP_GET_proxy(self::$API_PAIR_WITH_ID_URL . "/" . $accountId);
 	}
 
-	public function pair($token) {
-		return $this->HTTP_GET_proxy(self::$API_PAIR_URL . "/" . $token);
+	
+	public function pair($token, $web3Wallet, $web3Signature, $commonName) {
+		$data = array(
+			'wallet' => urlencode($web3Wallet),
+			'signature' => urlencode($web3Signature),
+			'commonName' => urlencode($commonName));
+
+        $data = array_filter($data);
+
+		if (empty($data)) {
+			return $this->HTTP_GET_proxy(self::$API_PAIR_URL . "/" . $token);
+		} else {
+			return $this->HTTP_POST_proxy(self::$API_PAIR_URL . "/" . $token, $data);
+		}
 	}
 
 	public function status($accountId, $operationId = null, $instanceId = null, $silent = false, $nootp = false) {
@@ -167,4 +179,29 @@ class LatchApp extends LatchAuth {
 			return $this->HTTP_GET_proxy(self::$API_OPERATION_URL . "/" . $operationId);
 		}
 	}
+
+    public function createTotp($id, $name) {
+		$data = array(
+			'userId' => urlencode($id),
+			'commonName' => urlencode($name));
+        return $this->HTTP_POST_proxy(self::$API_TOTP_URL, $data);
+	}
+
+	public function getTotp($totpId) {
+        return $this->HTTP_GET_proxy(self::$API_TOTP_URL . "/" . $totpId);
+	}
+    
+    public function validateTotp($totpId, $code) {
+		$data = array('code' => urlencode($code));
+        return $this->HTTP_POST_proxy(self::$API_TOTP_URL . "/" . $totpId . "/validate", $data);
+	}
+
+    public function deleteTotp($totpId) {
+        return $this->HTTP_DELETE_proxy(self::$API_TOTP_URL . "/" . $totpId);
+	}
+    
+    public function checkControlStatus($controlId) {
+		return $this->HTTP_GET_proxy(self::$API_CONTROL_STATUS_CHECK_URL . "/" . $controlId);
+	}
+        
 }

@@ -3,7 +3,7 @@
 /*
   Latch PHP SDK - Set of  reusable classes to  allow developers integrate Latch on
   their applications.
-  Copyright (C) 2023 Telefonica Digital
+  Copyright (C) 2024 Telefonica Innovación Digital
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -32,23 +32,25 @@ use DateTimeZone;
  * Use the methods inside LatchAPI and LatchUser class.
  */
 abstract class LatchAuth {
-    private static $API_VERSION = "2.0";
+    private static $API_VERSION = "3.0";
     public static $API_HOST = "https://latch.tu.com";
 
     // App API
-    public static $API_CHECK_STATUS_URL = "/api/2.0/status";
-    public static $API_PAIR_URL = "/api/2.0/pair";
-    public static $API_PAIR_WITH_ID_URL = "/api/2.0/pairWithId";
-    public static $API_UNPAIR_URL =  "/api/2.0/unpair";
-    public static $API_LOCK_URL =  "/api/2.0/lock";
-    public static $API_UNLOCK_URL =  "/api/2.0/unlock";
-    public static $API_HISTORY_URL =  "/api/2.0/history";
-    public static $API_OPERATION_URL =  "/api/2.0/operation";
-    public static $API_INSTANCE_URL = "/api/2.0/instance";
+    public static $API_CHECK_STATUS_URL = "/api/3.0/status";
+    public static $API_PAIR_URL = "/api/3.0/pair";
+    public static $API_PAIR_WITH_ID_URL = "/api/3.0/pairWithId";
+    public static $API_UNPAIR_URL =  "/api/3.0/unpair";
+    public static $API_LOCK_URL =  "/api/3.0/lock";
+    public static $API_UNLOCK_URL =  "/api/3.0/unlock";
+    public static $API_HISTORY_URL =  "/api/3.0/history";
+    public static $API_OPERATION_URL =  "/api/3.0/operation";
+    public static $API_INSTANCE_URL = "/api/3.0/instance";
+    public static $API_TOTP_URL= "/api/3.0/totps";
+    public static $API_CONTROL_STATUS_CHECK_URL = "/api/3.0/control-status";
 
     // User API
-    public static $API_APPLICATION_URL = "/api/2.0/application";
-    public static $API_SUBSCRIPTION_URL = "/api/2.0/subscription";
+    public static $API_APPLICATION_URL = "/api/3.0/application";
+    public static $API_SUBSCRIPTION_URL = "/api/3.0/subscription";
 
     public static $AUTHORIZATION_HEADER_NAME = "Authorization";
     public static $DATE_HEADER_NAME = "X-11Paths-Date";
@@ -215,7 +217,7 @@ abstract class LatchAuth {
 
         if ($params != null && sizeof($params) > 0){
             $serializedParams = $this->getSerializedParams($params);
-            if ($serializedParams != null && sizeof($serializedParams) > 0){
+            if ($serializedParams != null && strlen($serializedParams) > 0){
                 $stringToSign = trim($stringToSign . "\n" . $serializedParams);
             }
         }
